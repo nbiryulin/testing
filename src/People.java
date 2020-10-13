@@ -51,6 +51,18 @@ public class People extends Placeable implements Alive, Thinkable {
         setPosition(position);
     }
 
+    public void tryToFixBrains(BulkBluster bulkBluster) {
+         if (bulkBluster.getCount() > Integer.MAX_VALUE / 2) {
+             brain.setFixed(true);
+             System.out.println("Success");
+         } else {
+             System.out.println("Unsuccessful");
+         }
+    }
+
+    public void leaf(Book book) {
+         book.setCurrentPage(book.getCurrentPage() + 1);
+    }
 
     @Override
     public boolean equals(Object o) {

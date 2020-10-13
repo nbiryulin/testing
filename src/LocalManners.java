@@ -1,5 +1,2 @@
-public class LocalManners extends Knowledge {
-
-
-
+public class LocalManners implements Thinkable {
 }

@@ -1,8 +1,19 @@
 import java.util.Map;
+import java.util.Objects;
 
 public class Brain implements Thinkable {
 
     private Map<Thinkable, Knowledge> experience;
+
+    private boolean fixed;
+
+    public boolean isFixed() {
+        return fixed;
+    }
+
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
 
     public Map<Thinkable, Knowledge> getExperience() {
         return experience;
@@ -20,5 +31,16 @@ public class Brain implements Thinkable {
         return experience.get(topic);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Brain brain = (Brain) o;
+        return Objects.equals(experience, brain.experience);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(experience);
+    }
 }
