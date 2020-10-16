@@ -1,5 +1,10 @@
 public class Knowledge implements Thinkable {
 
+    public Knowledge(String opinion, int strength) {
+        this.opinion = opinion;
+        this.strength = strength;
+    }
+
     private String opinion;
 
     public int getStrength() {

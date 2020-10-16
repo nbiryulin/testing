@@ -27,6 +27,10 @@ public class Brain implements Thinkable {
         experience.put(topic, knowledge);
     }
 
+    public Brain(Map<Thinkable, Knowledge> experience) {
+        this.experience = experience;
+    }
+
     public Knowledge getKnowledge(Thinkable topic){
         return experience.get(topic);
     }

@@ -4,6 +4,11 @@ public class Cabin extends Placeable implements Thinkable {
 
    private int id;
 
+    public Cabin(Place currentPosition, int id) {
+        super(currentPosition);
+        this.id = id;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -17,8 +22,5 @@ public class Cabin extends Placeable implements Thinkable {
         return Objects.hash(id);
     }
 
-    public Cabin(Place currentPosition, int id) {
-        super(currentPosition);
-        this.id = id;
-    }
+
 }
