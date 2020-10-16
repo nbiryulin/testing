@@ -1,9 +1,8 @@
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.HashMap;
-import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -12,11 +11,18 @@ public class ZafodTest {
 
     @Test
     public void testLyingOnBridge() {
-        Zafod zafod = mock(Zafod.class);
+        Place startPoint = new Place(0.0, 0.0, 0.0, 2.0, Form.SQUARE);
+        Zafod zafod = new Zafod(startPoint, mock(Brain.class));
         Bridge bridge = new Bridge();
         Palm palm = new Palm();
+        assertTrue(zafod.countDistance(palm.getCurrentPosition()) > 15);
+        assertEquals(zafod.getPosition(), Position.STANDING);
+        zafod.lieDown();
+        assertEquals(zafod.getPosition(), Position.LYING);
+        System.out.println(zafod.countDistance(palm.getCurrentPosition()));
         zafod.goTo(bridge.getCurrentPosition());
-        assertTrue("Bridge is not near Palm", zafod.countDistance(palm.getCurrentPosition()) < 1);
+        System.out.println(zafod.countDistance(palm.getCurrentPosition()));
+        assertTrue("Bridge is not near Palm", zafod.countDistance(palm.getCurrentPosition()) < 15);
     }
 
     @Test

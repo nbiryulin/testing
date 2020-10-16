@@ -22,6 +22,6 @@ public class Placeable {
     }
 
     private double sqrOfDif(double a, double b) {
-        return Math.pow(b, 2) - Math.pow(a, 2);
+        return Math.abs(Math.pow(b, 2) - Math.pow(a, 2));
     }
 }
