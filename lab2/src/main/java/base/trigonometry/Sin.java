@@ -6,9 +6,6 @@ import base.Calc;
 public class Sin implements Calc {
 
     public double calculate(double x, double accuracy) {
-        if (!odz(x)) {
-            throw new ArithmeticException();
-        }
         double result = 0;
         int n = 1;
         double term = x;

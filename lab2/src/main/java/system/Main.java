@@ -19,7 +19,6 @@ public class Main implements Calc {
     }
 
     public boolean odz(double x) {
-        //todo
         return false;
     }
 }

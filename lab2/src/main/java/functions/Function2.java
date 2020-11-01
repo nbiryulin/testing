@@ -12,7 +12,11 @@ public class Function2 implements Calc {
     private static final Log5 log5 = new Log5();
 
     public double calculate(double x, double accuracy) {
-        return Math.pow(Math.pow(firstPart(x, accuracy), 2) - secondPart(x, accuracy), 2);
+        if (odz(x)) {
+            return Math.pow(Math.pow(firstPart(x, accuracy), 2) - secondPart(x, accuracy), 2);
+        } else {
+            return Double.NaN;
+        }
     }
 
     private double firstPart(double x, double ac) {
@@ -24,7 +28,6 @@ public class Function2 implements Calc {
     }
 
     public boolean odz(double x) {
-        //todo
-        return false;
+        return x != 1 && log2.odz(x) && log5.odz(x) && log10.odz(x);
     }
 }

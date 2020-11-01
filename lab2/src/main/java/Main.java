@@ -14,7 +14,7 @@ public class Main {
          *
          * - write to csv
          *
-         * - odz everywhere
+         * - odz everywhere ------------------------------------------ done
          *
          * - write it tests with mocks
          *

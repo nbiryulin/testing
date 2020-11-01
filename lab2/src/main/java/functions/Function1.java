@@ -18,7 +18,11 @@ public class Function1 implements Calc {
     }
 
     private double firstPart(double x, double ac) {
-        return Math.pow((csc.calculate(x, ac) - cot.calculate(x, ac) + sin.calculate(x, ac)) / sec.calculate(x, ac), 2);
+        if (odz(x)) {
+            return Math.pow((csc.calculate(x, ac) - cot.calculate(x, ac) + sin.calculate(x, ac)) / sec.calculate(x, ac), 2);
+        } else {
+            return Double.NaN;
+        }
     }
 
     private double secondPart(double x, double ac) {
@@ -26,7 +30,6 @@ public class Function1 implements Calc {
     }
 
     public boolean odz(double x) {
-        //todo
-        return false;
+        return csc.odz(x) && cot.odz(x) && sec.odz(x) && tan.odz(x);
     }
 }

@@ -10,11 +10,16 @@ public class Tan implements Calc {
 
 
     public double calculate(double x, double accuracy) {
-        return sin.calculate(x, accuracy) / cos.calculate(x, accuracy);
+        if (odz(x)) {
+            return sin.calculate(x, accuracy) / cos.calculate(x, accuracy);
+        } else {
+            return Double.NaN;
+        }
     }
 
     public boolean odz(double x) {
-        //todo
-        return false;
+        double r = x / Math.PI;
+        r = r % 2;
+        return r != 0.5 && r != 1.5;
     }
 }

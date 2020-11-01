@@ -4,11 +4,16 @@ public class Csc extends Sin{
 
     @Override
     public double calculate(double x, double accuracy) {
-        return 1 / super.calculate(x, accuracy);
+        if (odz(x)) {
+            return 1 / super.calculate(x, accuracy);
+        } else {
+            return Double.NaN;
+        }
     }
 
     public boolean odz(double x) {
-        //todo
-        return false;
+        double r = x / Math.PI;
+        r = r % 2;
+        return r != 0 && r != 1;
     }
 }
