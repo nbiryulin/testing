@@ -88,9 +88,9 @@ public class Main {
         res.add(s);
         s = a(Math.E);
         res.add(s);
-        s = a(Math.pow(Math.E,2));
-        res.add(s);
         s = a(5.0);
+        res.add(s);
+        s = a(125.0);
         res.add(s);
 
         
@@ -102,6 +102,6 @@ public class Main {
           }
           private static String a(Double b){
               Function2 function2 = new Function2();
-            return "\"" + b + ", " + Math.log(b) + "\"" ;
+            return "\"" + b + ", " + Math.log(b)/ Math.log(5) + "\"" ;
           }
 }

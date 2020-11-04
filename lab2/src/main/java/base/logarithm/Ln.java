@@ -16,7 +16,7 @@ public class Ln implements Calc {
                 cal = cal / mul;
                 sum = sum + cal;
                 i++;
-            } while (Math.abs(cal) >= accuracy);
+            } while (Math.abs(cal) >= accuracy * 0.01);
             sum = 2 * sum;
             return sum;
         } else {
