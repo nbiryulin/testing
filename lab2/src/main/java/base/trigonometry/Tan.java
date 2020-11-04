@@ -2,7 +2,7 @@ package base.trigonometry;
 
 import base.Calc;
 
-public class Tan implements Calc {
+public class Tan extends Cos {
 
     private static final Sin sin = new Sin();
 
@@ -20,6 +20,6 @@ public class Tan implements Calc {
     public boolean odz(double x) {
         double r = x / Math.PI;
         r = r % 2;
-        return r != 0.5 && r != 1.5;
+        return r != 0.5 && r != 1.5 && r!=-0.5 && r!=-1.5;
     }
 }

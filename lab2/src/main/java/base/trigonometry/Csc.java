@@ -14,6 +14,6 @@ public class Csc extends Sin{
     public boolean odz(double x) {
         double r = x / Math.PI;
         r = r % 2;
-        return r != 0 && r != 1;
+        return r != 0 && r != 1 && r != -1;
     }
 }
