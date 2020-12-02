@@ -44,7 +44,6 @@ public class ItemToCartTest {
 
     private void notAuthorized() {
         driver.manage().deleteAllCookies();
-
         driver.get("https://market.yandex.ru/");
         driver.manage().window().setSize(new Dimension(1440, 877));
         driver.findElement(By.xpath("//a/div/div/picture/img")).click();

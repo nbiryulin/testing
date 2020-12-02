@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class AuthTest {
 
     @Before
     public void setUp() {
-        System.setProperty("webdriver.gecko.driver","/Users/nbiryulin/Downloads/geckodriver");
+        System.setProperty("webdriver.gecko.driver", "/Users/nbiryulin/Downloads/geckodriver");
     }
 
     @After
@@ -27,51 +28,97 @@ public class AuthTest {
         driver.quit();
     }
 
-    @Test
-    public void testChrome() {
+    @Test(expected = StaleElementReferenceException.class)
+    public void testChromeValid() {
         driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-        auth();
+        validAuth();
     }
 
-    @Test
-    public void testFirefox() {
+    @Test(expected = StaleElementReferenceException.class)
+    public void testFirefoxInvalid() {
         driver = new ChromeDriver();
         js = (JavascriptExecutor) driver;
         vars = new HashMap<String, Object>();
-        auth();
+        validAuth();
     }
 
 
+    @Test
+    public void testChromeInvalidPassword() {
+        driver = new ChromeDriver();
+        js = (JavascriptExecutor) driver;
+        vars = new HashMap<String, Object>();
+        invalidPasAuth();
+    }
 
-    public void auth() {
-        driver.get("http://market.yandex.ru/");
-        // Test name: auth
-        // Step # | name | target | value | comment
-        // 1 | open | https://passport.yandex.ru/auth?retpath=https%3A%2F%2Fmarket.yandex.ru%2Fcloser.html%3Fsocial-broker_seed%3D1606657487282202a9e%23status%3Dok&retnopopup=&consumer=market&action_if_anonymous=ignore&result_location=fragment&provider=ya&sid=25&display=popup&origin=market_desktop_header |  |
-        driver.get("https://passport.yandex.ru/auth?retpath=https%3A%2F%2Fmarket.yandex.ru");
-        // 2 | setWindowSize | 1440x767 |  |
-        driver.manage().window().setSize(new Dimension(1440, 767));
-        // 3 | storeWindowHandle | root |  |
-        vars.put("root", driver.getWindowHandle());
-        driver.findElement(By.xpath("//input[@id=\'passp-field-login\']")).sendKeys("selenium.testing.itmo");
-        driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]")).click();
-        // 7 | click | xpath=//form[@action='https://passport.yandex.ru/auth?origin=market_desktop_header&retpath=https%3A%2F%2Fmarket.yandex.ru%2Fcloser.html%3Fsocial-broker_seed%3D1606657487282202a9e%23status%3Dok'] |  |
-        //   driver.findElement(By.xpath("//form[@action=\'https://passport.yandex.ru/auth?origin=market_desktop_header&retpath=https%3A%2F%2Fmarket.yandex.ru\']")).click();
-        // 8 | click | xpath=//button[contains(.,'Войти')] |  |
-        driver.findElement(By.xpath("//button[contains(.,\'Войти\')]")).click();
-        // 9 | mouseOver | xpath=//button[contains(.,'Войти')] |  |
+    @Test
+    public void testChromeInvalidLogin() {
+        driver = new ChromeDriver();
+        js = (JavascriptExecutor) driver;
+        vars = new HashMap<String, Object>();
+        invalidLoginAuth();
+    }
+
+    @Test
+    public void testFirefoxInvalidLogin() {
+        driver = new FirefoxDriver();
+        js = (JavascriptExecutor) driver;
+        vars = new HashMap<String, Object>();
+        invalidLoginAuth();
+    }
+
+    @Test
+    public void testFirefoxValidPassword() {
+        driver = new FirefoxDriver();
+        js = (JavascriptExecutor) driver;
+        vars = new HashMap<String, Object>();
+        invalidPasAuth();
+    }
+
+
+    private void validAuth() {
+        auth("selenium.testing.itmo", "Tenscores");
+        assertNotNull(driver.manage().getCookies());
+        WebElement a = driver.findElement(By.xpath("//input[@id=\'passp-field-passwd\']"));
+        a.click();
+    }
+
+    private void invalidPasAuth() {
+        auth("selenium.testing.itmo", "incorrectpas");
+        WebElement a = driver.findElement(By.xpath("//input[@id=\'passp-field-passwd\']"));
+        a.click();
+        WebElement b = driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]/div[2]/div/div/div[2]"));
+        b.click();
+        assertEquals("Авторизация", driver.getTitle());
+        assertTrue(b.getText().contains("Неверный пароль"));
+    }
+
+    private void invalidLoginAuth() {
+        authLogin("afeihejasjirsahejkdnhwe");
+        WebElement a = driver.findElement(By.xpath("//div[@id='root']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/div/form/div/div[2]"));
+        assertTrue(a.getText().equals("Не помню логин") || a.getText().equals("Такого аккаунта нет"));
+    }
+
+    private void auth(String login, String pas) {
+        authLogin(login);
         {
             WebElement element = driver.findElement(By.xpath("//button[contains(.,\'Войти\')]"));
             element.click();
         }
-        // 10 | type | xpath=//div[@id='root']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/form/div[2]/span/input | Hekut123 |
-        driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/form/div[2]/span/input")).sendKeys("Tenscores");
-        // 11 | click | xpath=//div[@id='root']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/form/div[2]/span/input |  |
+        driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/form/div[2]/span/input")).sendKeys(pas);
         driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]/div[2]/div/div/div[2]/div[3]/div/div/div/form/div[2]/span/input")).click();
-        // 12 | click | xpath=//button[contains(.,'Войти')] |  |
         driver.findElement(By.xpath("//button[contains(.,\'Войти\')]")).click();
-        assertNotNull(driver.manage().getCookies());
+    }
+
+    private void authLogin(String login) {
+        driver.get("http://market.yandex.ru/");
+        driver.get("https://passport.yandex.ru/validAuth?retpath=https%3A%2F%2Fmarket.yandex.ru");
+        driver.manage().window().setSize(new Dimension(1440, 767));
+        vars.put("root", driver.getWindowHandle());
+        driver.findElement(By.xpath("//input[@id=\'passp-field-login\']")).sendKeys(login);
+        driver.findElement(By.xpath("//div[@id=\'root\']/div/div[2]")).click();
+        driver.findElement(By.xpath("//button[contains(.,\'Войти\')]")).click();
     }
 }
